@@ -4,10 +4,12 @@ let index = 0;
 let tempTexture;
 
 let interval = 5000;
+let fadeTime = 2000;
 let lastChange = 0;
 
 let blurShader;
 let opacityControl = 1;
+let blurControl = 0;
 
 
 
@@ -29,12 +31,14 @@ function setup() {
   lastChange = millis();
   blurShader.init();
 
-  blurShader.setBlurAmount(0.0);
+  blurShader.setBlurAmount(blurControl);
+  fadeTime = constrain(fadeTime,0,interval/2);
 
 }
 
 function draw() {
   controlChange();
+  blurShader.setBlurAmount(blurControl);
   background(255,0,0);
   tempTexture.background(0);
   tempTexture.tint(255,opacityControl*255);
@@ -45,5 +49,19 @@ function draw() {
 
 
 function controlChange(){
-  
+  if(millis() - lastChange > interval){
+    index ++;
+    index = index % imgs.length;
+    lastChange = millis();
+    opacityControl = 0;
+  }
+
+  if(millis() - lastChange < fadeTime){
+    opacityControl = map(millis() - lastChange, 0, fadeTime, 0, 1);
+  }else if(millis() - lastChange > interval - fadeTime){
+    opacityControl = map(millis() - lastChange, interval - fadeTime, interval, 1, 0);
+  }
+
+  blurControl = (1-opacityControl) * .5;
+
 }
