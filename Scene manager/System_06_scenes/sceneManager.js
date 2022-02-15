@@ -11,9 +11,9 @@ class SceneManager{
         }
     }
 
-    update(){
+    update(amp, ramp){
         if(this.scenes.length >= this.index){
-            this.scenes[this.index].update();
+            this.scenes[this.index].update(amp, ramp);
         }
     }
 

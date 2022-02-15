@@ -11,6 +11,7 @@ class Shape{
         this.process();
         this.noiseOffset = random(0,500);
         this.ang = random(TWO_PI);
+        this.angChangeFlag = false;
     }
 
     addVertex(x,y){
@@ -22,9 +23,14 @@ class Shape{
     }
 
     update(generalControl){
-        if(generalControl === 0){
-            this.ang = random(TWO_PI);
-        }
+        // if(generalControl === 0){
+        //     if(!this.angChangeFlag){
+        //         this.ang = random(TWO_PI);
+        //         this.angChangeFlag = true;
+        //     }
+        // }else{
+        //     this.angChangeFlag = false;
+        // }
     }
     
     render(){

@@ -3,9 +3,9 @@ class SVGScene{
     constructor(shapes){
         this.shapes = shapes;
         this.generalControl = 0;
-        this.maxDisplace = 0;
-        this.maxNoiseDisplace = 0;
-        this.generalNoiseScale = 0;
+        this.maxDisplace = 100;
+        this.maxNoiseDisplace = 50;
+        this.generalNoiseScale = 0.5;
         this.renderTexture = createGraphics(width, height, WEBGL);
 
     }
@@ -21,7 +21,8 @@ class SVGScene{
         this.renderTexture.pop();
     }
 
-    update(){
+    update(amp, ramp){
+        this.generalControl = ramp;
         for(let i = 0 ; i < this.shapes.length ; i ++){
             this.shapes[i].update(this.generalControl);
         }
@@ -32,7 +33,7 @@ class SVGScene{
         //  let displace = map(sin(frameCount*0.01),-1,1,0,200);
         //  displace = constrain(displace,,3);
         this.renderTexture.push();
-        let control = map(sin(frameCount*0.1),-1,1,0,1); 
+        let control = this.generalControl;
        // let control = generalControl;
           
         let scaleOffset = 0;
@@ -45,11 +46,11 @@ class SVGScene{
         this.renderTexture.texture(img); 
         this.renderTexture.beginShape();
         
-        let noiseScale = generalNoiseScale;
+        let noiseScale = this.generalNoiseScale;
 
         let noiseDisplace =  noise((shape.x + frameCount) * noiseScale, shape.y * noiseScale) * control;
 
-        let displacement =( maxDisplace * control) + (noiseDisplace * maxNoiseDisplace);
+        let displacement =( this.maxDisplace * control) + (noiseDisplace * this.maxNoiseDisplace);
         
         // noise((this.x + frameCount) * noiseScale, this.y 
         // * noiseScale) * control;
