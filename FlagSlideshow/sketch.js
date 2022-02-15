@@ -17,7 +17,7 @@ let blurControl = 0;
 function preload(){
   let blurHorizontalShader = loadShader('assets/base.vert', 'assets/blur.frag');
   let blurVerticalShader = loadShader('assets/base.vert', 'assets/blur.frag');
-  for(let i = 0 ; i < 5 ; i++){
+  for(let i = 0 ; i < 11 ; i++){
     let filename = "assets/slide_" + (i+1) + ".jpg";
     imgs[i] = loadImage(filename);
   }
@@ -33,7 +33,7 @@ function setup() {
 
   blurShader.setBlurAmount(blurControl);
   fadeTime = constrain(fadeTime,0,interval/2);
-
+  console.log("loaded " + imgs.length + " images");
 }
 
 function draw() {
